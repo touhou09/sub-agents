@@ -4,7 +4,7 @@ description: |
   Full-stack web developer for frontend and backend development.
   Trigger on: "React", "Next.js", "frontend", "backend", "API", "FastAPI",
   "component", "endpoint", "authentication", "UI", "form", "page".
-model: sonnet
+model: opus
 tools:
   - Read
   - Write

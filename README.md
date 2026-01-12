@@ -8,21 +8,21 @@
 ├── global-templates/              # 전역 설정 템플릿 (~/.claude/에 복사)
 │   ├── CLAUDE.md                 # 전역 지침
 │   ├── settings.json             # 전역 설정 (권한, 모델, 훅 등)
-│   ├── agents/                   # 전역 agents (5개)
-│   └── skills/                   # 전역 skills (5개)
+│   ├── agents/                   # 전역 agents (3개)
+│   │   ├── reviewer.md           # testing, git, log
+│   │   ├── data-engineer.md      # data pipeline, ETL
+│   │   └── web-dev.md            # frontend, backend
+│   └── skills/                   # 전역 skills (4개)
+│       ├── pre-commit/           # commit 전 품질 검사
+│       ├── dev-style/            # 개발 스타일
+│       │   ├── tdd.md            # TDD 워크플로우
+│       │   └── perf-optimize.md  # 성능 최적화
+│       └── architect/
+│           └── schema-design.md  # 스키마 설계
 │
 ├── project-templates/             # 프로젝트 설정 템플릿 (.claude/에 복사)
-│   ├── .claude/
-│   ├── .mcp.json
-│   ├── .gitignore
-│   └── CLAUDE.md
 │
 └── mcp-templates/                 # MCP 서버 설정 템플릿
-    ├── github.json
-    ├── gitlab.json
-    ├── database.json
-    ├── monitoring.json
-    └── generic.json
 ```
 
 ---
@@ -66,12 +66,14 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 `~/.claude/CLAUDE.md`는 모든 프로젝트에 적용되는 전역 지침입니다.
 
 ### 포함 내용
-- **기본 동작**: 언어(한국어), 코드 품질 우선순위
+- **기본 동작**: 한국어 답변, 내부 영어 사용
 - **코드 스타일**: 들여쓰기, 타입 안전성
 - **역할 프로필**: Data Engineer, Fullstack, DevOps 모드
-- **선호 도구**: React, Node.js, PostgreSQL, Docker 등
-- **금지 사항**: console.log, 하드코딩 시크릿, any 타입
-- **커밋 규칙**: conventional commits 형식
+- **선호 도구**:
+  - Frontend: React, Next.js, TypeScript
+  - Backend: Python, FastAPI
+  - Database: PostgreSQL, Redis, ClickHouse
+  - Data: Polars, Delta Lake, Apache Arrow
 
 ### CLAUDE.md 우선순위
 
@@ -129,25 +131,22 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 
 ---
 
-## 전역 Agents (5개)
+## 전역 Agents (3개)
 
 | Agent | 용도 | 모델 |
 |-------|------|------|
-| `code-reviewer` | 코드 리뷰, PR 검토, 품질 체크 | opus |
-| `data-engineer` | 데이터 파이프라인, ETL, SQL 최적화 | sonnet |
-| `devops` | 인프라, 배포, CI/CD, 모니터링 | sonnet |
-| `webapp-dev` | 웹앱 개발 (React, Node.js 등) | sonnet |
-| `general-helper` | 범용 프로그래밍, 코드 설명 | inherit |
+| `reviewer` | Testing, Git 관리, 로그 모니터링 | haiku |
+| `data-engineer` | 데이터 파이프라인, ETL, Polars/Arrow | opus |
+| `web-dev` | Frontend (React), Backend (FastAPI) | opus |
 
-## 전역 Skills (5개)
+## 전역 Skills (4개)
 
-| Skill | 용도 | 트리거 키워드 |
-|-------|------|---------------|
-| `pr-review` | PR 리뷰 워크플로우 | "review PR" |
-| `data-validation` | 데이터 품질 검증 | "validate data" |
-| `deploy-check` | 배포 준비 상태 확인 | "pre-deploy" |
-| `security-scan` | 보안 취약점 스캔 | "security audit" |
-| `sql-optimize` | SQL 쿼리 최적화 | "optimize query" |
+| Skill | 용도 | 사용 Agent |
+|-------|------|------------|
+| `pre-commit` | Commit 전 품질 검사 (타입체크, 린트, 테스트) | reviewer |
+| `dev-style/tdd` | TDD 기반 개발 워크플로우 | data-engineer, web-dev |
+| `dev-style/perf-optimize` | 속도/리소스 최적화 | data-engineer, web-dev |
+| `architect/schema-design` | 스키마 설계 및 검증 | data-engineer, web-dev |
 
 ---
 
@@ -175,12 +174,11 @@ claude mcp add --transport http --scope project sentry https://mcp.sentry.dev/mc
 ## 사용 예시
 
 ```
-Review the changes in src/auth/     # code-reviewer agent
-Review PR #123                       # pr-review skill
-Validate this dataset                # data-validation skill
-Check deployment readiness           # deploy-check skill
-Scan for security issues             # security-scan skill
-Optimize this slow query             # sql-optimize skill
+Run tests and commit                 # reviewer agent + pre-commit skill
+Create a data pipeline               # data-engineer agent + tdd, schema-design skills
+Build a user registration form       # web-dev agent + tdd, schema-design skills
+This query is slow                   # data-engineer agent + perf-optimize skill
+Optimize page load time              # web-dev agent + perf-optimize skill
 ```
 
 ---
