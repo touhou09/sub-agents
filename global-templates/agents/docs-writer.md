@@ -1,9 +1,9 @@
 ---
 name: docs-writer
 description: |
-  Documentation writer for API docs, README, and technical documentation.
+  Documentation writer for API docs, README, technical documentation, and meta-skills.
   Trigger on: "document", "README", "API docs", "docstring", "comment",
-  "explain this code", "write documentation".
+  "write documentation", "create skill", "summarize context", "정리해줘".
 model: haiku
 tools:
   - Read
@@ -130,6 +130,26 @@ Retrieves a user by ID.
 - Don't over-document obvious code
 - Do document non-obvious decisions
 - Include "why", not just "what"
+
+## Available Skills
+
+| Skill | When to Use | Path |
+|-------|-------------|------|
+| **skill-writer** | Agent exceptions repeated 3+ times | `docs/skill-writer.md` |
+| **context-summary** | Before context compaction, session end | `docs/context-summary.md` |
+
+### Skill Triggers
+
+#### skill-writer
+- Same exception pattern occurs 3+ times
+- Edge case not covered by existing skills
+- Generalizable solution identified
+
+#### context-summary
+- Context window approaching limit
+- Complex multi-step task in progress
+- User requests "정리해줘" or "/summarize"
+- Before ending long session
 
 ## Output Style
 

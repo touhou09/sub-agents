@@ -15,13 +15,16 @@
 │   │   ├── devops.md             # docker, k8s, deploy
 │   │   ├── docs-writer.md        # documentation
 │   │   └── general-helper.md     # Q&A, explanation
-│   └── skills/                   # 전역 skills (4개)
+│   └── skills/                   # 전역 skills (6개)
 │       ├── pre-commit/           # commit 전 품질 검사
 │       ├── dev-style/            # 개발 스타일
-│       │   ├── tdd.md            # TDD 워크플로우
-│       │   └── perf-optimize.md  # 성능 최적화
-│       └── architect/
-│           └── schema-design.md  # 스키마 설계
+│       │   ├── tdd.md
+│       │   └── perf-optimize.md
+│       ├── architect/
+│       │   └── schema-design.md
+│       └── docs/                 # 문서화 관련
+│           ├── skill-writer.md   # 새 skill 작성
+│           └── context-summary.md # 진행상황 정리
 │
 ├── project-templates/             # 프로젝트 설정 템플릿 (.claude/에 복사)
 │
@@ -145,7 +148,7 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `docs-writer` | 문서화, API docs, README | haiku |
 | `general-helper` | 코드베이스 탐색, 범용 Q&A | opus |
 
-## 전역 Skills (4개)
+## 전역 Skills (6개)
 
 | Skill | 용도 | 사용 Agent |
 |-------|------|------------|
@@ -153,6 +156,8 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `dev-style/tdd` | TDD 기반 개발 워크플로우 | data-engineer, web-dev |
 | `dev-style/perf-optimize` | 속도/리소스 최적화 | data-engineer, web-dev |
 | `architect/schema-design` | 스키마 설계 및 검증 | data-engineer, web-dev |
+| `docs/skill-writer` | 반복 예외 발생 시 새 skill 작성 | docs-writer |
+| `docs/context-summary` | Context compact 전 진행상황 정리 | docs-writer |
 
 ---
 
