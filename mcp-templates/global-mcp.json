@@ -1,0 +1,86 @@
+{
+  "_description": "Global MCP template - merge into ~/.claude.json",
+  "_install": "claude mcp add --scope user ...",
+
+  "mcpServers": {
+    "postgresql": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "${DATABASE_URL}"
+      }
+    },
+
+    "mysql": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-mysql"],
+      "env": {
+        "MYSQL_CONNECTION_STRING": "${MYSQL_URL}"
+      }
+    },
+
+    "sqlite": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "${DB_PATH:-./data.db}"],
+      "env": {}
+    },
+
+    "redis": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-redis"],
+      "env": {
+        "REDIS_URL": "${REDIS_URL:-redis://localhost:6379}"
+      }
+    },
+
+    "s3": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-aws-s3"],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "${AWS_ACCESS_KEY_ID}",
+        "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}",
+        "AWS_REGION": "${AWS_REGION:-us-east-1}",
+        "S3_BUCKET": "${S3_BUCKET}"
+      }
+    },
+
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+
+    "gitlab": {
+      "type": "http",
+      "url": "${GITLAB_URL:-https://gitlab.com}/api/v4/mcp",
+      "headers": {
+        "PRIVATE-TOKEN": "${GITLAB_TOKEN}"
+      }
+    },
+
+    "sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
+    },
+
+    "datadog": {
+      "type": "http",
+      "url": "https://api.datadoghq.com/mcp",
+      "headers": {
+        "DD-API-KEY": "${DATADOG_API_KEY}",
+        "DD-APPLICATION-KEY": "${DATADOG_APP_KEY}"
+      }
+    },
+
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${FS_ALLOWED_PATH:-${PWD}}"],
+      "env": {}
+    },
+
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "env": {}
+    }
+  }
+}

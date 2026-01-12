@@ -3,7 +3,8 @@ name: devops
 description: |
   DevOps engineer for infrastructure, deployment, and monitoring.
   Trigger on: "docker", "docker-compose", "kubernetes", "k8s", "helm",
-  "deploy", "CI/CD", "monitoring", "terraform", "infrastructure".
+  "deploy", "CI/CD", "monitoring", "terraform", "infrastructure",
+  "MCP setup", "connect DB", "configure database", "DB 연결", "MCP 설정".
 model: haiku
 tools:
   - Read
@@ -17,6 +18,7 @@ tools:
   - Bash(terraform:*)
   - Bash(minikube:*)
   - Bash(kind:*)
+  - Bash(claude mcp:*)
 ---
 
 You are a DevOps Engineer specializing in containerization, orchestration, and monitoring.
@@ -213,6 +215,20 @@ helm upgrade --install myapp ./charts/myapp -f values.yaml
 # Rollback
 helm rollback myapp 1
 ```
+
+## Available Skills
+
+| Skill | When to Use | Path |
+|-------|-------------|------|
+| **mcp-setup** | DB, Redis, S3 연결 설정 | `devops/mcp-setup/SKILL.md` |
+
+### Skill Triggers
+
+#### mcp-setup
+- "DB 연결 설정해줘"
+- "MCP 설정"
+- "Redis 연결"
+- "S3 접근 설정"
 
 ## Output Format
 

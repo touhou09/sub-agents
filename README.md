@@ -15,13 +15,15 @@
 │   │   ├── devops.md             # docker, k8s, deploy
 │   │   ├── docs-writer.md        # documentation
 │   │   └── general-helper.md     # Q&A, explanation
-│   └── skills/                   # 전역 skills (6개)
+│   └── skills/                   # 전역 skills (7개)
 │       ├── pre-commit/SKILL.md
 │       ├── dev-style/
 │       │   ├── tdd/SKILL.md
 │       │   └── perf-optimize/SKILL.md
 │       ├── architect/
 │       │   └── schema-design/SKILL.md
+│       ├── devops/
+│       │   └── mcp-setup/SKILL.md
 │       └── docs/
 │           ├── skill-writer/SKILL.md
 │           └── context-summary/SKILL.md
@@ -168,6 +170,7 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `architect/schema-design` | 스키마 설계 및 검증 | data-engineer, web-dev |
 | `docs/skill-writer` | 반복 예외 시 기존 skill 업데이트 | docs-writer |
 | `docs/context-summary` | Context compact 전 진행상황 정리 | docs-writer |
+| `devops/mcp-setup` | DB, Redis, S3 MCP 연결 설정 | devops |
 
 ---
 
@@ -200,22 +203,50 @@ settings.json (공유)          settings.local.json (개인)
 
 ## MCP 템플릿
 
-### GitHub
+### 전역 MCP 설치 (1회)
+
 ```bash
-claude mcp add --transport http --scope project github https://api.githubcopilot.com/mcp/
+# Database
+claude mcp add --transport stdio --scope user postgresql -- npx -y @modelcontextprotocol/server-postgres
+claude mcp add --transport stdio --scope user redis -- npx -y @anthropic-ai/mcp-server-redis
+
+# Git
+claude mcp add --transport http --scope user github https://api.githubcopilot.com/mcp/
+
+# Monitoring
+claude mcp add --transport http --scope user sentry https://mcp.sentry.dev/mcp
+
+# Storage
+claude mcp add --transport stdio --scope user s3 -- npx -y @anthropic-ai/mcp-server-aws-s3
 ```
 
-### PostgreSQL
+### 프로젝트별 .env 설정
+
 ```bash
-claude mcp add --transport stdio --scope project db -- npx -y @modelcontextprotocol/server-postgres
+# .env.example 복사
+cp mcp-templates/.env.example /path/to/project/.env
+
+# 실제 값 입력
+DATABASE_URL=postgresql://user:pass@localhost:5432/mydb
+REDIS_URL=redis://localhost:6379
 ```
 
-### Sentry
-```bash
-claude mcp add --transport http --scope project sentry https://mcp.sentry.dev/mcp
+### 파일 구조
+
+```
+mcp-templates/
+├── README.md           # 설치/사용 가이드
+├── global-mcp.json     # 전역 MCP 템플릿
+├── .env.example        # 환경변수 템플릿
+├── database.json       # DB 상세 설정
+├── storage.json        # S3/GCS 상세 설정
+├── monitoring.json     # Sentry/Datadog
+├── github.json
+├── gitlab.json
+└── generic.json        # 커스텀 템플릿
 ```
 
-자세한 설정은 `mcp-templates/` 참조.
+자세한 설정은 `mcp-templates/README.md` 참조.
 
 ---
 

@@ -1,0 +1,65 @@
+{
+  "_description": "Cloud Storage MCP Servers - S3, GCS, Azure Blob",
+  "_usage": "Add to ~/.claude.json (global) or .mcp.json (project)",
+  "_env_required": {
+    "s3": ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "S3_BUCKET"],
+    "gcs": ["GOOGLE_APPLICATION_CREDENTIALS", "GCS_BUCKET"],
+    "azure": ["AZURE_STORAGE_CONNECTION_STRING", "AZURE_CONTAINER"]
+  },
+
+  "mcpServers": {
+    "s3": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-aws-s3"],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "${AWS_ACCESS_KEY_ID}",
+        "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}",
+        "AWS_REGION": "${AWS_REGION:-us-east-1}",
+        "S3_BUCKET": "${S3_BUCKET}"
+      }
+    },
+
+    "s3-readonly": {
+      "_comment": "Read-only S3 access for data analysis",
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-aws-s3", "--readonly"],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "${AWS_ACCESS_KEY_ID}",
+        "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}",
+        "AWS_REGION": "${AWS_REGION:-us-east-1}",
+        "S3_BUCKET": "${S3_BUCKET}"
+      }
+    },
+
+    "gcs": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-gcs"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "${GOOGLE_APPLICATION_CREDENTIALS}",
+        "GCS_PROJECT": "${GCS_PROJECT}",
+        "GCS_BUCKET": "${GCS_BUCKET}"
+      }
+    },
+
+    "azure-blob": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-azure-blob"],
+      "env": {
+        "AZURE_STORAGE_CONNECTION_STRING": "${AZURE_STORAGE_CONNECTION_STRING}",
+        "AZURE_CONTAINER": "${AZURE_CONTAINER}"
+      }
+    },
+
+    "minio": {
+      "_comment": "S3-compatible MinIO",
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-aws-s3"],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "${MINIO_ACCESS_KEY}",
+        "AWS_SECRET_ACCESS_KEY": "${MINIO_SECRET_KEY}",
+        "AWS_ENDPOINT_URL": "${MINIO_ENDPOINT:-http://localhost:9000}",
+        "S3_BUCKET": "${MINIO_BUCKET}"
+      }
+    }
+  }
+}
