@@ -139,7 +139,7 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `reviewer` | Testing, Git 관리, 로그 모니터링 | haiku |
 | `data-engineer` | 데이터 파이프라인, ETL, Polars/Arrow | opus |
 | `web-dev` | Frontend (React), Backend (FastAPI) | opus |
-| `devops` | Docker, K8s, 배포, 모니터링 | sonnet |
+| `devops` | Docker, K8s, 배포, 모니터링 | haiku |
 
 ## 전역 Skills (4개)
 

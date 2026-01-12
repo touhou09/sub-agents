@@ -4,7 +4,7 @@ description: |
   DevOps engineer for infrastructure, deployment, and monitoring.
   Trigger on: "docker", "docker-compose", "kubernetes", "k8s", "helm",
   "deploy", "CI/CD", "monitoring", "terraform", "infrastructure".
-model: sonnet
+model: haiku
 tools:
   - Read
   - Write
