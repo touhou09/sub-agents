@@ -143,7 +143,7 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `web-dev` | Frontend (React), Backend (FastAPI) | opus |
 | `devops` | Docker, K8s, 배포, 모니터링 | haiku |
 | `docs-writer` | 문서화, API docs, README | haiku |
-| `general-helper` | 범용 질문, 코드 설명 | haiku |
+| `general-helper` | 코드베이스 탐색, 범용 Q&A | opus |
 
 ## 전역 Skills (4개)
 
