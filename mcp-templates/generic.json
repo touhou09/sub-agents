@@ -1,0 +1,104 @@
+{
+  "_description": "Generic MCP Server Templates - HTTP, SSE, Stdio, WebSocket",
+  "_usage": "Use these templates as starting points for custom MCP servers",
+
+  "mcpServers": {
+    "http-template": {
+      "_comment": "HTTP/REST API MCP server template",
+      "type": "http",
+      "url": "${SERVICE_URL}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${API_TOKEN}",
+        "Content-Type": "application/json"
+      }
+    },
+
+    "http-api-key": {
+      "_comment": "HTTP MCP server with API key authentication",
+      "type": "http",
+      "url": "${SERVICE_URL}/mcp",
+      "headers": {
+        "X-API-Key": "${API_KEY}"
+      }
+    },
+
+    "sse-template": {
+      "_comment": "Server-Sent Events MCP server template",
+      "type": "sse",
+      "url": "${SSE_URL}"
+    },
+
+    "stdio-npx": {
+      "_comment": "Stdio MCP server via npx (Node.js package)",
+      "command": "npx",
+      "args": ["-y", "${NPM_PACKAGE}"],
+      "env": {
+        "API_KEY": "${API_KEY}"
+      }
+    },
+
+    "stdio-python": {
+      "_comment": "Stdio MCP server via Python",
+      "command": "python",
+      "args": ["-m", "${PYTHON_MODULE}"],
+      "env": {
+        "API_KEY": "${API_KEY}"
+      }
+    },
+
+    "stdio-uvx": {
+      "_comment": "Stdio MCP server via uvx (Python uv runner)",
+      "command": "uvx",
+      "args": ["${PYTHON_PACKAGE}"],
+      "env": {
+        "API_KEY": "${API_KEY}"
+      }
+    },
+
+    "stdio-docker": {
+      "_comment": "Stdio MCP server via Docker",
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "${DOCKER_IMAGE}"],
+      "env": {}
+    },
+
+    "stdio-local-script": {
+      "_comment": "Stdio MCP server from local script",
+      "command": "${SCRIPT_PATH}",
+      "args": ["--config", "${CONFIG_PATH}"],
+      "env": {
+        "DEBUG": "false"
+      }
+    },
+
+    "websocket-template": {
+      "_comment": "WebSocket MCP server template",
+      "type": "ws",
+      "url": "wss://${WS_HOST}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${TOKEN}"
+      }
+    },
+
+    "filesystem": {
+      "_comment": "Local filesystem access",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${ALLOWED_PATH}"],
+      "env": {}
+    },
+
+    "memory": {
+      "_comment": "In-memory key-value store",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {}
+    },
+
+    "fetch": {
+      "_comment": "HTTP fetch capabilities",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "env": {}
+    }
+  }
+}

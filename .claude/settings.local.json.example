@@ -1,0 +1,21 @@
+{
+  "_description": "Local settings template - Copy to settings.local.json and fill in values",
+  "_note": "This file should be in .gitignore",
+
+  "permissions": {
+    "allow": [
+      "Bash(psql:*)",
+      "Bash(redis-cli:*)",
+      "Bash(docker:*)"
+    ]
+  },
+  "env": {
+    "DATABASE_URL": "postgresql://user:password@localhost:5432/mydb",
+    "REDIS_URL": "redis://localhost:6379",
+    "SENTRY_AUTH_TOKEN": "your-sentry-token-here",
+    "DATADOG_API_KEY": "your-datadog-api-key",
+    "DATADOG_APP_KEY": "your-datadog-app-key",
+    "GITLAB_TOKEN": "your-gitlab-token",
+    "GITHUB_TOKEN": "your-github-token"
+  }
+}

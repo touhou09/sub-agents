@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(yarn:*)",
+      "Bash(pnpm:*)",
+      "Bash(pytest:*)",
+      "Bash(docker-compose:*)",
+      "Bash(make:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh issue:*)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Write(.env*)",
+      "Write(*credentials*)",
+      "Write(*secret*)",
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)"
+    ]
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "LOG_LEVEL": "debug"
+  }
+}
