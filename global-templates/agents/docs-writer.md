@@ -135,15 +135,15 @@ Retrieves a user by ID.
 
 | Skill | When to Use | Path |
 |-------|-------------|------|
-| **skill-writer** | Agent exceptions repeated 3+ times | `docs/skill-writer.md` |
-| **context-summary** | Before context compaction, session end | `docs/context-summary.md` |
+| **skill-writer** | Agent exceptions repeated 3+ times | `docs/skill-writer/SKILL.md` |
+| **context-summary** | Before context compaction, session end | `docs/context-summary/SKILL.md` |
 
 ### Skill Triggers
 
 #### skill-writer
 - Same exception pattern occurs 3+ times
-- Edge case not covered by existing skills
-- Generalizable solution identified
+- Existing skill doesn't handle the edge case
+- Update existing SKILL.md to cover new case
 
 #### context-summary
 - Context window approaching limit

@@ -1,7 +1,7 @@
 ---
 name: skill-writer
 description: |
-  Creates new skills when agents encounter repeated exceptions not covered by existing skills.
+  Updates existing skills when agents encounter repeated exceptions or edge cases.
   Trigger: When the same exception pattern occurs 3+ times across agent executions.
   Used by: docs-writer
 allowed-tools:
@@ -15,12 +15,12 @@ allowed-tools:
 
 ## Purpose
 
-Automatically create new skills when agents encounter repeated edge cases or exceptions that existing skills don't handle.
+Update existing SKILL.md files to handle repeated edge cases or exceptions that current skill workflows don't cover.
 
 ## Trigger Condition
 
-A new skill should be created when:
-1. An agent encounters an exception/edge case not covered by existing skills
+An existing skill should be updated when:
+1. An agent encounters an exception/edge case during skill execution
 2. The same pattern occurs **3 or more times**
 3. The pattern is generalizable (not project-specific)
 
@@ -31,109 +31,119 @@ A new skill should be created when:
 Monitor for repeated exceptions:
 ```
 Exception Log:
-- [2024-01-10] data-engineer: Schema mismatch in CDC pipeline
-- [2024-01-12] data-engineer: Schema mismatch in batch ingestion
-- [2024-01-15] data-engineer: Schema mismatch in streaming → 3회 반복!
+- [2024-01-10] data-engineer: Schema mismatch in CDC pipeline (using schema-design)
+- [2024-01-12] data-engineer: Schema mismatch in batch ingestion (using schema-design)
+- [2024-01-15] data-engineer: Schema mismatch in streaming (using schema-design) → 3회 반복!
 ```
 
-### Step 2: Analyze Pattern
+### Step 2: Identify Target Skill
 
-Identify commonalities:
-- Which agent(s) affected?
-- What is the root cause?
-- What solution was applied each time?
-- Is it generalizable?
+Find the most relevant existing skill:
+1. Check which skill was active when exception occurred
+2. Search skills for related keywords
+3. Identify the skill that should handle this case
 
-### Step 3: Create Skill
-
-```markdown
----
-name: <skill-name>
-description: |
-  <when to use this skill>
-allowed-tools:
-  - <required tools>
----
-
-# <Skill Title>
-
-## When to Apply
-<trigger conditions>
-
-## Workflow
-<step-by-step solution>
-
-## Examples
-<concrete examples>
+```bash
+# Search existing skills
+grep -r "schema" skills/
+# Result: skills/architect/schema-design/SKILL.md
 ```
 
-### Step 4: Register Skill
+### Step 3: Analyze Gap
 
-1. Create skill directory and file:
-   ```
-   skills/<category>/<skill-name>/SKILL.md
-   ```
+Compare current skill with needed behavior:
+- What does the skill currently handle?
+- What edge case is missing?
+- How should the workflow be extended?
 
-   Categories:
-   - `dev-style/` - Development patterns
-   - `architect/` - Design/architecture patterns
-   - `docs/` - Documentation patterns
-   - New category if needed
+### Step 4: Update Skill
 
-2. Directory structure example:
-   ```
-   skills/
-   └── dev-style/
-       └── rate-limit-handler/
-           └── SKILL.md
+Modify the existing SKILL.md:
+
+1. **Add new trigger condition** (if needed)
+   ```markdown
+   ## When to Apply
+   - Existing triggers...
+   - NEW: Schema mismatch during CDC/streaming ingestion
    ```
 
-3. Update relevant agent(s) to reference the new skill
+2. **Extend workflow** (add new step or branch)
+   ```markdown
+   ## Workflow
+   ### Step N: Handle Schema Mismatch
+   - Detect column differences
+   - Apply safe migration strategy
+   - Validate backward compatibility
+   ```
+
+3. **Add example** (document the new case)
+   ```markdown
+   ## Examples
+   ### Schema Mismatch in Streaming
+   ...
+   ```
+
+### Step 5: Verify Update
+
+1. Read the updated SKILL.md
+2. Confirm the new case is covered
+3. Check workflow consistency
 
 ## Output Format
 
 ```markdown
-## New Skill Created
+## Skill Updated
 
 ### Trigger
 3+ occurrences of: <pattern description>
 
-### Skill Details
-- Name: `<skill-name>`
-- Path: `skills/<category>/<skill-name>.md`
+### Updated Skill
+- Path: `skills/<category>/<skill-name>/SKILL.md`
 - Used by: <agent(s)>
 
-### Summary
-<what the skill does>
+### Changes Made
+1. Added trigger: <new trigger condition>
+2. Extended workflow: <new step description>
+3. Added example: <example title>
 
-### Agent Updates Required
-- [ ] Update <agent>.md to include skill reference
+### Diff Summary
+- Lines added: N
+- Sections modified: <section names>
 ```
 
 ## Examples
 
-### Example: Schema Mismatch Handling
+### Example: Schema Evolution Handling
 
 **Pattern detected (3 times):**
 - Schema column mismatch during data ingestion
 
-**Skill created:**
-```
-skills/architect/schema-migration/SKILL.md
-- Handles schema evolution during ingestion
-- Provides backward compatibility patterns
-- Added to data-engineer skill list
+**Skill updated:** `skills/architect/schema-design/SKILL.md`
+```markdown
+Changes:
+1. Added "Schema Mismatch Detection" to triggers
+2. Added Step 5: "Handle Runtime Schema Changes"
+3. Added example: "CDC Schema Evolution"
 ```
 
-### Example: API Rate Limiting
+### Example: Rate Limit in API Calls
 
 **Pattern detected (4 times):**
 - External API rate limit exceeded
 
-**Skill created:**
+**Skill updated:** `skills/dev-style/perf-optimize/SKILL.md`
+```markdown
+Changes:
+1. Added "API Rate Limiting" to triggers
+2. Added Step: "Implement Backoff Strategy"
+3. Added example: "External API Rate Limiting"
 ```
-skills/dev-style/rate-limit-handler/SKILL.md
-- Implements exponential backoff
-- Adds retry logic with jitter
-- Added to web-dev, data-engineer skill lists
-```
+
+## When to Create New Skill
+
+Only create a NEW skill when:
+1. No existing skill is remotely related
+2. The pattern requires a completely different workflow
+3. Adding to existing skill would make it too complex
+
+In most cases, extending an existing skill is preferred.
