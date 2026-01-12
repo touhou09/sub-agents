@@ -16,15 +16,15 @@
 │   │   ├── docs-writer.md        # documentation
 │   │   └── general-helper.md     # Q&A, explanation
 │   └── skills/                   # 전역 skills (6개)
-│       ├── pre-commit/           # commit 전 품질 검사
-│       ├── dev-style/            # 개발 스타일
-│       │   ├── tdd.md
-│       │   └── perf-optimize.md
+│       ├── pre-commit/SKILL.md
+│       ├── dev-style/
+│       │   ├── tdd/SKILL.md
+│       │   └── perf-optimize/SKILL.md
 │       ├── architect/
-│       │   └── schema-design.md
-│       └── docs/                 # 문서화 관련
-│           ├── skill-writer.md   # 새 skill 작성
-│           └── context-summary.md # 진행상황 정리
+│       │   └── schema-design/SKILL.md
+│       └── docs/
+│           ├── skill-writer/SKILL.md
+│           └── context-summary/SKILL.md
 │
 ├── project-templates/             # 프로젝트 설정 템플릿 (.claude/에 복사)
 │
