@@ -1,8 +1,27 @@
 {
+  "_comment": "Project MCP servers - uses env vars from .env",
   "mcpServers": {
     "github": {
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "postgresql": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "${DATABASE_URL}"
+      }
+    },
+    "redis": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-redis"],
+      "env": {
+        "REDIS_URL": "${REDIS_URL}"
+      }
+    },
+    "sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
     },
     "filesystem": {
       "command": "npx",
