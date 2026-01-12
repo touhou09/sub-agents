@@ -5,7 +5,17 @@
 ## 구조
 
 ```
-├── global-templates/              # 전역 설정 템플릿 (~/.claude/에 복사)
+~/.claude/                         # 전역 설정 (global-templates/ 복사)
+├── CLAUDE.md
+├── settings.json
+├── agents/*.md
+└── skills/<name>/SKILL.md
+
+~/.claude.json                     # MCP 서버 (별도 파일, CLI로 추가)
+```
+
+```
+├── global-templates/              # → ~/.claude/에 복사
 │   ├── CLAUDE.md                 # 전역 지침
 │   ├── settings.json             # 전역 설정 (권한, 모델, 훅 등)
 │   ├── agents/                   # 전역 agents (6개)
@@ -50,20 +60,26 @@
 ### 1. 전역 템플릿 설치
 
 ```bash
-# 디렉토리 생성
+# 전체 복사 (global-templates = ~/.claude)
+cp -r global-templates/* ~/.claude/
+
+# 또는 개별 복사
 mkdir -p ~/.claude/agents ~/.claude/skills ~/.claude/logs
-
-# 전역 지침 복사
-cp global-templates/CLAUDE.md ~/.claude/CLAUDE.md
-
-# agents 복사
+cp global-templates/CLAUDE.md ~/.claude/
+cp global-templates/settings.json ~/.claude/
 cp -r global-templates/agents/* ~/.claude/agents/
-
-# skills 복사
 cp -r global-templates/skills/* ~/.claude/skills/
+```
 
-# settings.json 복사 (기존 설정이 있다면 수동으로 병합)
-cp global-templates/settings.json ~/.claude/settings.json
+### 1-1. 전역 MCP 설치 (선택)
+
+MCP는 `~/.claude.json` (별도 파일)에 저장됩니다:
+
+```bash
+# CLI로 추가 (--scope user = 전역)
+claude mcp add --transport stdio --scope user postgresql -- npx -y @modelcontextprotocol/server-postgres
+claude mcp add --transport stdio --scope user redis -- npx -y @anthropic-ai/mcp-server-redis
+claude mcp add --transport http --scope user github https://api.githubcopilot.com/mcp/
 ```
 
 ### 2. 프로젝트에 적용
