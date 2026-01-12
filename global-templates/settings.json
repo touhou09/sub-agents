@@ -1,16 +1,31 @@
 {
+  "model": "claude-opus-4-5-20251101",
+  "alwaysThinkingEnabled": true,
+
   "permissions": {
     "allow": [
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
       "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git stash:*)",
       "Bash(gh pr:*)",
       "Bash(gh issue:*)",
+      "Bash(gh repo:*)",
       "Bash(npm test:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run:*)",
+      "Bash(yarn:*)",
+      "Bash(pnpm:*)",
       "Bash(pytest:*)",
+      "Bash(go test:*)",
+      "Bash(cargo test:*)",
+      "Bash(make:*)",
       "Bash(docker ps:*)",
+      "Bash(docker logs:*)",
       "Bash(kubectl get:*)",
+      "Bash(kubectl describe:*)",
       "Read",
       "Glob",
       "Grep"
@@ -18,7 +33,89 @@
     "deny": [
       "Bash(rm -rf:*)",
       "Bash(sudo:*)",
-      "Bash(git push --force:*)"
+      "Bash(chmod 777:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(./secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(docker build:*)",
+      "Bash(kubectl apply:*)",
+      "Bash(terraform apply:*)"
     ]
-  }
+  },
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.claude/logs && echo \"[PRE] $(date '+%Y-%m-%d %H:%M:%S') Bash\" >> ~/.claude/logs/commands.log",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.claude/logs && echo \"[POST] $(date '+%Y-%m-%d %H:%M:%S') Write\" >> ~/.claude/logs/files.log",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.claude/logs && echo \"[INPUT] $(date '+%Y-%m-%d %H:%M:%S')\" >> ~/.claude/logs/prompts.log",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.claude/logs && echo \"[SESSION END] $(date '+%Y-%m-%d %H:%M:%S')\" >> ~/.claude/logs/sessions.log",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+
+  "env": {
+    "NODE_ENV": "development",
+    "BASH_DEFAULT_TIMEOUT_MS": "60000",
+    "BASH_MAX_TIMEOUT_MS": "300000",
+    "MAX_THINKING_TOKENS": "16000"
+  },
+
+  "enabledPlugins": {},
+
+  "enableAllProjectMcpServers": true,
+
+  "attribution": {
+    "commit": "\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+  },
+
+  "cleanupPeriodDays": 30,
+  "outputStyle": "Explanatory"
 }
