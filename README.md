@@ -8,10 +8,11 @@
 ├── global-templates/              # 전역 설정 템플릿 (~/.claude/에 복사)
 │   ├── CLAUDE.md                 # 전역 지침
 │   ├── settings.json             # 전역 설정 (권한, 모델, 훅 등)
-│   ├── agents/                   # 전역 agents (3개)
+│   ├── agents/                   # 전역 agents (4개)
 │   │   ├── reviewer.md           # testing, git, log
 │   │   ├── data-engineer.md      # data pipeline, ETL
-│   │   └── web-dev.md            # frontend, backend
+│   │   ├── web-dev.md            # frontend, backend
+│   │   └── devops.md             # docker, k8s, deploy
 │   └── skills/                   # 전역 skills (4개)
 │       ├── pre-commit/           # commit 전 품질 검사
 │       ├── dev-style/            # 개발 스타일
@@ -131,13 +132,14 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 
 ---
 
-## 전역 Agents (3개)
+## 전역 Agents (4개)
 
 | Agent | 용도 | 모델 |
 |-------|------|------|
 | `reviewer` | Testing, Git 관리, 로그 모니터링 | haiku |
 | `data-engineer` | 데이터 파이프라인, ETL, Polars/Arrow | opus |
 | `web-dev` | Frontend (React), Backend (FastAPI) | opus |
+| `devops` | Docker, K8s, 배포, 모니터링 | sonnet |
 
 ## 전역 Skills (4개)
 
@@ -179,6 +181,8 @@ Create a data pipeline               # data-engineer agent + tdd, schema-design 
 Build a user registration form       # web-dev agent + tdd, schema-design skills
 This query is slow                   # data-engineer agent + perf-optimize skill
 Optimize page load time              # web-dev agent + perf-optimize skill
+Setup docker-compose environment     # devops agent
+Deploy to kubernetes                 # devops agent
 ```
 
 ---
