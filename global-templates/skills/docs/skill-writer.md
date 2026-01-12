@@ -69,13 +69,26 @@ allowed-tools:
 
 ### Step 4: Register Skill
 
-1. Write skill file to appropriate directory:
+1. Create skill directory and file:
+   ```
+   skills/<category>/<skill-name>/SKILL.md
+   ```
+
+   Categories:
    - `dev-style/` - Development patterns
    - `architect/` - Design/architecture patterns
    - `docs/` - Documentation patterns
    - New category if needed
 
-2. Update relevant agent(s) to reference the new skill
+2. Directory structure example:
+   ```
+   skills/
+   └── dev-style/
+       └── rate-limit-handler/
+           └── SKILL.md
+   ```
+
+3. Update relevant agent(s) to reference the new skill
 
 ## Output Format
 
@@ -106,7 +119,7 @@ allowed-tools:
 
 **Skill created:**
 ```
-skills/architect/schema-migration.md
+skills/architect/schema-migration/SKILL.md
 - Handles schema evolution during ingestion
 - Provides backward compatibility patterns
 - Added to data-engineer skill list
@@ -119,7 +132,7 @@ skills/architect/schema-migration.md
 
 **Skill created:**
 ```
-skills/dev-style/rate-limit-handler.md
+skills/dev-style/rate-limit-handler/SKILL.md
 - Implements exponential backoff
 - Adds retry logic with jitter
 - Added to web-dev, data-engineer skill lists
