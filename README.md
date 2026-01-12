@@ -27,6 +27,16 @@
 │           └── context-summary/SKILL.md
 │
 ├── project-templates/             # 프로젝트 설정 템플릿 (.claude/에 복사)
+│   ├── CLAUDE.md                 # 프로젝트 지침 (global 참조 포함)
+│   ├── .mcp.json                 # MCP 서버 설정
+│   ├── .gitignore                # gitignore 템플릿
+│   └── .claude/
+│       ├── settings.json         # 프로젝트 공유 설정
+│       ├── settings.local.json.example  # 로컬 설정 예시
+│       ├── agents/               # 프로젝트 전용 agents
+│       │   └── project-specific.md  # 템플릿
+│       └── skills/               # 프로젝트 전용 skills
+│           └── custom-workflow/SKILL.md  # 템플릿
 │
 └── mcp-templates/                 # MCP 서버 설정 템플릿
 ```
@@ -156,8 +166,35 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `dev-style/tdd` | TDD 기반 개발 워크플로우 | data-engineer, web-dev |
 | `dev-style/perf-optimize` | 속도/리소스 최적화 | data-engineer, web-dev |
 | `architect/schema-design` | 스키마 설계 및 검증 | data-engineer, web-dev |
-| `docs/skill-writer` | 반복 예외 발생 시 새 skill 작성 | docs-writer |
+| `docs/skill-writer` | 반복 예외 시 기존 skill 업데이트 | docs-writer |
 | `docs/context-summary` | Context compact 전 진행상황 정리 | docs-writer |
+
+---
+
+## 프로젝트 템플릿 (project-templates)
+
+프로젝트별로 복사해서 사용하는 템플릿입니다.
+
+### 구성 요소
+
+| 파일 | 용도 | Git |
+|------|------|-----|
+| `CLAUDE.md` | 프로젝트 지침, global agents/skills 참조 | commit |
+| `.claude/settings.json` | 프로젝트 공유 권한/환경변수 | commit |
+| `.claude/settings.local.json` | 로컬 전용 설정 (DB URL 등) | gitignore |
+| `.claude/agents/*.md` | 프로젝트 전용 agent | commit |
+| `.claude/skills/*/SKILL.md` | 프로젝트 전용 skill | commit |
+| `.mcp.json` | MCP 서버 설정 | commit |
+
+### settings.json vs settings.local.json
+
+```
+settings.json (공유)          settings.local.json (개인)
+├── npm, pytest 허용          ├── psql, redis-cli 허용
+├── rm -rf, sudo 차단         ├── DATABASE_URL
+└── NODE_ENV=development      ├── REDIS_URL
+                              └── API tokens
+```
 
 ---
 

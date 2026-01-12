@@ -1,109 +1,120 @@
 # Project Guidelines
 
-## Overview
+## Project Overview
 
-This repository contains Claude Code templates for sub-agents, skills, and MCP configurations.
+<!-- Describe your project here -->
 
 ## Directory Structure
 
 ```
 .claude/
-├── settings.json           # Project shared settings
+├── settings.json           # Project shared settings (commit this)
 ├── settings.local.json     # Local settings (gitignored)
 ├── agents/                 # Project-specific agents
 └── skills/                 # Project-specific skills
-
-mcp-templates/              # MCP server configuration templates
-├── github.json
-├── gitlab.json
-├── database.json
-├── monitoring.json
-└── generic.json
 
 .mcp.json                   # Project MCP servers
 ```
 
 ## Coding Conventions
 
-### Agent Files (.md)
-- Use YAML frontmatter for metadata
-- Include clear `description` for when to use
-- Specify allowed `tools`
-- Document the agent's responsibilities
+<!-- Add project-specific coding conventions here -->
 
-### Skill Files (SKILL.md)
-- Place in `skills/<skill-name>/SKILL.md`
-- Include `allowed-tools` in frontmatter
-- Document when the skill activates
-- Provide clear workflow steps
+### General
+- Use meaningful variable names
+- Keep functions small and focused
+- Write tests for new features
 
-### MCP Configuration
-- Use environment variables for secrets: `${VAR_NAME}`
-- Document required environment variables
-- Prefer project-scoped MCP for team sharing
+### Naming
+- Files: kebab-case
+- Classes: PascalCase
+- Functions/Variables: camelCase (JS/TS), snake_case (Python)
+
+---
 
 ## Available Global Agents
 
-| Agent | Purpose |
-|-------|---------|
-| code-reviewer | Code review and PR checks |
-| data-engineer | Data pipelines, ETL, SQL optimization |
-| devops | Infrastructure, CI/CD, monitoring |
-| webapp-dev | Web application development |
-| general-helper | General programming assistance |
+| Agent | Purpose | Model |
+|-------|---------|-------|
+| `reviewer` | Testing, git management, log monitoring | haiku |
+| `data-engineer` | Data pipeline, ETL, Polars/Arrow | opus |
+| `web-dev` | Frontend (React), Backend (FastAPI) | opus |
+| `devops` | Docker, K8s, deployment, monitoring | haiku |
+| `docs-writer` | Documentation, API docs, README | haiku |
+| `general-helper` | Codebase exploration, Q&A | opus |
 
 ## Available Global Skills
 
-| Skill | Purpose |
-|-------|---------|
-| pr-review | Pull request review workflow |
-| data-validation | Data quality checks |
-| deploy-check | Deployment readiness validation |
-| security-scan | Security vulnerability scanning |
-| sql-optimize | SQL query optimization |
+| Skill | Purpose | Used by |
+|-------|---------|---------|
+| `pre-commit` | Type check, lint, test before commit | reviewer |
+| `tdd` | TDD-based development workflow | data-engineer, web-dev |
+| `perf-optimize` | Performance optimization | data-engineer, web-dev |
+| `schema-design` | Schema design and validation | data-engineer, web-dev |
+| `skill-writer` | Update skills for repeated exceptions | docs-writer |
+| `context-summary` | Document progress before context compact | docs-writer |
 
-## Usage
+---
 
-### Using Agents
-Agents are automatically selected based on the task. You can also explicitly request:
-```
-Use the code-reviewer agent to check my changes
-```
+## Usage Examples
 
-### Using Skills
-Skills activate based on keywords in your request:
 ```
-Review PR #123
-Validate this dataset
-Check if we're ready to deploy
-Scan for security issues
-Optimize this SQL query
+Run tests and commit              # reviewer + pre-commit
+Create a data pipeline            # data-engineer + tdd, schema-design
+Build a user registration form    # web-dev + tdd, schema-design
+This query is slow                # data-engineer + perf-optimize
+Setup docker-compose              # devops
+Where is authentication handled?  # general-helper
+Document this module              # docs-writer
 ```
 
-### Adding MCP Servers
-```bash
-# Add GitHub MCP
-claude mcp add --transport http --scope project github https://api.githubcopilot.com/mcp/
+---
 
-# Add PostgreSQL MCP
-claude mcp add --transport stdio --scope project db -- npx -y @modelcontextprotocol/server-postgres
+## Project-Specific Customization
+
+### Adding Project Agent
+
+Create `.claude/agents/<name>.md`:
+```markdown
+---
+name: my-project-agent
+description: |
+  When to use this agent...
+model: sonnet
+tools:
+  - Read
+  - Write
+  - Grep
+---
+
+# Agent instructions here
 ```
+
+### Adding Project Skill
+
+Create `.claude/skills/<name>/SKILL.md`:
+```markdown
+---
+name: my-skill
+description: |
+  When to activate...
+allowed-tools:
+  - Read
+  - Grep
+---
+
+# Skill workflow here
+```
+
+---
 
 ## Environment Variables
 
-Required for certain features:
+Required for certain features (set in `.claude/settings.local.json`):
 
 | Variable | Purpose |
 |----------|---------|
-| DATABASE_URL | PostgreSQL connection string |
-| SENTRY_AUTH_TOKEN | Sentry API access |
-| DATADOG_API_KEY | Datadog metrics |
-| GITLAB_TOKEN | GitLab API access |
-
-## Best Practices
-
-1. **Keep secrets out of code** - Use environment variables
-2. **Document agent triggers** - Clear descriptions help activation
-3. **Test locally first** - Verify agents and skills work
-4. **Share with team** - Commit `.claude/settings.json` and `.mcp.json`
-5. **Gitignore local settings** - Keep `settings.local.json` private
+| `DATABASE_URL` | PostgreSQL connection |
+| `REDIS_URL` | Redis connection |
+| `SENTRY_AUTH_TOKEN` | Sentry API |
+| `GITHUB_TOKEN` | GitHub API |
