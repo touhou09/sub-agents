@@ -8,6 +8,9 @@
 # 디렉토리 생성
 mkdir -p ~/.claude/agents ~/.claude/skills ~/.claude/logs
 
+# 전역 지침 복사
+cp CLAUDE.md ~/.claude/CLAUDE.md
+
 # agents 복사
 cp -r agents/* ~/.claude/agents/
 
@@ -16,6 +19,30 @@ cp -r skills/* ~/.claude/skills/
 
 # settings.json 복사 (기존 설정이 있다면 수동으로 병합)
 cp settings.json ~/.claude/settings.json
+```
+
+---
+
+## CLAUDE.md (전역 지침)
+
+`~/.claude/CLAUDE.md`는 모든 프로젝트에 적용되는 전역 지침 파일입니다.
+
+### 포함 내용
+- **기본 동작**: 언어, 코드 품질 우선순위
+- **코드 스타일**: 들여쓰기, 타입 안전성
+- **역할 프로필**: Data Engineer, Fullstack, DevOps 모드
+- **선호 도구**: 프레임워크, 라이브러리
+- **금지 사항**: 보안, 코드 품질 규칙
+- **커밋 규칙**: 메시지 형식
+
+### CLAUDE.md 우선순위
+
+```
+1. Enterprise policy (최고)
+2. ./CLAUDE.md (프로젝트)
+3. ./.claude/rules/*.md
+4. ~/.claude/CLAUDE.md (전역) ← 이 파일
+5. ./CLAUDE.local.md (최저)
 ```
 
 ---
