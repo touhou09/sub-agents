@@ -8,11 +8,13 @@
 ├── global-templates/              # 전역 설정 템플릿 (~/.claude/에 복사)
 │   ├── CLAUDE.md                 # 전역 지침
 │   ├── settings.json             # 전역 설정 (권한, 모델, 훅 등)
-│   ├── agents/                   # 전역 agents (4개)
+│   ├── agents/                   # 전역 agents (6개)
 │   │   ├── reviewer.md           # testing, git, log
 │   │   ├── data-engineer.md      # data pipeline, ETL
 │   │   ├── web-dev.md            # frontend, backend
-│   │   └── devops.md             # docker, k8s, deploy
+│   │   ├── devops.md             # docker, k8s, deploy
+│   │   ├── docs-writer.md        # documentation
+│   │   └── general-helper.md     # Q&A, explanation
 │   └── skills/                   # 전역 skills (4개)
 │       ├── pre-commit/           # commit 전 품질 검사
 │       ├── dev-style/            # 개발 스타일
@@ -132,7 +134,7 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 
 ---
 
-## 전역 Agents (4개)
+## 전역 Agents (6개)
 
 | Agent | 용도 | 모델 |
 |-------|------|------|
@@ -140,6 +142,8 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 | `data-engineer` | 데이터 파이프라인, ETL, Polars/Arrow | opus |
 | `web-dev` | Frontend (React), Backend (FastAPI) | opus |
 | `devops` | Docker, K8s, 배포, 모니터링 | haiku |
+| `docs-writer` | 문서화, API docs, README | haiku |
+| `general-helper` | 범용 질문, 코드 설명 | haiku |
 
 ## 전역 Skills (4개)
 
