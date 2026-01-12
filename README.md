@@ -6,27 +6,13 @@
 
 ```
 ├── global-templates/              # 전역 설정 템플릿 (~/.claude/에 복사)
-│   ├── settings.json             # 전역 권한 설정
+│   ├── CLAUDE.md                 # 전역 지침
+│   ├── settings.json             # 전역 설정 (권한, 모델, 훅 등)
 │   ├── agents/                   # 전역 agents (5개)
-│   │   ├── code-reviewer.md
-│   │   ├── data-engineer.md
-│   │   ├── devops.md
-│   │   ├── webapp-dev.md
-│   │   └── general-helper.md
-│   ├── skills/                   # 전역 skills (5개)
-│   │   ├── pr-review/
-│   │   ├── data-validation/
-│   │   ├── deploy-check/
-│   │   ├── security-scan/
-│   │   └── sql-optimize/
-│   └── README.md
+│   └── skills/                   # 전역 skills (5개)
 │
 ├── project-templates/             # 프로젝트 설정 템플릿 (.claude/에 복사)
 │   ├── .claude/
-│   │   ├── settings.json
-│   │   ├── settings.local.json.example
-│   │   ├── agents/project-specific.md
-│   │   └── skills/custom-workflow/
 │   ├── .mcp.json
 │   ├── .gitignore
 │   └── CLAUDE.md
@@ -39,46 +25,109 @@
     └── generic.json
 ```
 
+---
+
 ## 빠른 시작
 
 ### 1. 전역 템플릿 설치
 
-모든 프로젝트에서 사용할 agents와 skills를 설치합니다:
-
 ```bash
 # 디렉토리 생성
-mkdir -p ~/.claude/agents ~/.claude/skills
+mkdir -p ~/.claude/agents ~/.claude/skills ~/.claude/logs
+
+# 전역 지침 복사
+cp global-templates/CLAUDE.md ~/.claude/CLAUDE.md
 
 # agents 복사
-cp global-templates/agents/* ~/.claude/agents/
+cp -r global-templates/agents/* ~/.claude/agents/
 
 # skills 복사
 cp -r global-templates/skills/* ~/.claude/skills/
 
-# settings 병합 (기존 설정이 없다면)
+# settings.json 복사 (기존 설정이 있다면 수동으로 병합)
 cp global-templates/settings.json ~/.claude/settings.json
 ```
 
 ### 2. 프로젝트에 적용
 
-새 프로젝트에 템플릿을 적용합니다:
-
 ```bash
-# 프로젝트 디렉토리로 이동
 cd /path/to/your/project
 
-# .claude 디렉토리 복사
 cp -r /path/to/sub-agents/project-templates/.claude .
-
-# MCP 설정 복사
 cp /path/to/sub-agents/project-templates/.mcp.json .
-
-# .gitignore 복사
 cp /path/to/sub-agents/project-templates/.gitignore .
-
-# CLAUDE.md 복사 후 프로젝트에 맞게 수정
 cp /path/to/sub-agents/project-templates/CLAUDE.md .
 ```
+
+---
+
+## 전역 CLAUDE.md (지침)
+
+`~/.claude/CLAUDE.md`는 모든 프로젝트에 적용되는 전역 지침입니다.
+
+### 포함 내용
+- **기본 동작**: 언어(한국어), 코드 품질 우선순위
+- **코드 스타일**: 들여쓰기, 타입 안전성
+- **역할 프로필**: Data Engineer, Fullstack, DevOps 모드
+- **선호 도구**: React, Node.js, PostgreSQL, Docker 등
+- **금지 사항**: console.log, 하드코딩 시크릿, any 타입
+- **커밋 규칙**: conventional commits 형식
+
+### CLAUDE.md 우선순위
+
+```
+1. Enterprise policy (최고)
+2. ./CLAUDE.md (프로젝트)
+3. ./.claude/rules/*.md
+4. ~/.claude/CLAUDE.md (전역) ← 이 파일
+5. ./CLAUDE.local.md (최저)
+```
+
+---
+
+## 전역 Settings.json 상세
+
+### Model (모델)
+
+```json
+"model": "claude-opus-4-5-20251101",
+"alwaysThinkingEnabled": true
+```
+
+### Permissions (권한)
+
+| 구분 | 내용 |
+|------|------|
+| **Allow** | git(읽기), gh, npm/yarn/pnpm, pytest, docker ps, kubectl get, Read/Glob/Grep |
+| **Deny** | rm -rf, sudo, chmod 777, git push --force, .env, ~/.ssh/**, ~/.aws/** |
+| **Ask** | git push, git commit, docker build, kubectl apply, terraform apply |
+
+### Hooks (훅)
+
+| 훅 | 용도 | 로그 파일 |
+|----|------|----------|
+| `PreToolUse` | Bash 명령 로깅 | `~/.claude/logs/commands.log` |
+| `PostToolUse` | 파일 쓰기 로깅 | `~/.claude/logs/files.log` |
+| `UserPromptSubmit` | 사용자 입력 로깅 | `~/.claude/logs/prompts.log` |
+| `Stop` | 세션 종료 로깅 | `~/.claude/logs/sessions.log` |
+
+### Env (환경 변수)
+
+| 변수 | 설명 | 값 |
+|------|------|-----|
+| `BASH_DEFAULT_TIMEOUT_MS` | 기본 타임아웃 | 60000 (1분) |
+| `BASH_MAX_TIMEOUT_MS` | 최대 타임아웃 | 300000 (5분) |
+| `MAX_THINKING_TOKENS` | Extended thinking | 16000 |
+
+### 기타 설정
+
+```json
+"enableAllProjectMcpServers": true,
+"cleanupPeriodDays": 30,
+"outputStyle": "Explanatory"
+```
+
+---
 
 ## 전역 Agents (5개)
 
@@ -94,41 +143,34 @@ cp /path/to/sub-agents/project-templates/CLAUDE.md .
 
 | Skill | 용도 | 트리거 키워드 |
 |-------|------|---------------|
-| `pr-review` | PR 리뷰 워크플로우 | "review PR", "check pull request" |
-| `data-validation` | 데이터 품질 검증 | "validate data", "data quality" |
-| `deploy-check` | 배포 준비 상태 확인 | "deployment readiness", "pre-deploy" |
-| `security-scan` | 보안 취약점 스캔 | "security audit", "vulnerability scan" |
-| `sql-optimize` | SQL 쿼리 최적화 | "optimize query", "slow query" |
+| `pr-review` | PR 리뷰 워크플로우 | "review PR" |
+| `data-validation` | 데이터 품질 검증 | "validate data" |
+| `deploy-check` | 배포 준비 상태 확인 | "pre-deploy" |
+| `security-scan` | 보안 취약점 스캔 | "security audit" |
+| `sql-optimize` | SQL 쿼리 최적화 | "optimize query" |
+
+---
 
 ## MCP 템플릿
 
-### GitHub 연동
+### GitHub
 ```bash
 claude mcp add --transport http --scope project github https://api.githubcopilot.com/mcp/
 ```
 
-### PostgreSQL 연동
+### PostgreSQL
 ```bash
 claude mcp add --transport stdio --scope project db -- npx -y @modelcontextprotocol/server-postgres
 ```
 
-### Sentry 연동
+### Sentry
 ```bash
 claude mcp add --transport http --scope project sentry https://mcp.sentry.dev/mcp
 ```
 
-자세한 설정은 `mcp-templates/` 디렉토리를 참조하세요.
+자세한 설정은 `mcp-templates/` 참조.
 
-## 환경 변수
-
-`.claude/settings.local.json.example`을 `.claude/settings.local.json`으로 복사하고 설정:
-
-| 변수 | 용도 |
-|------|------|
-| `DATABASE_URL` | PostgreSQL 연결 문자열 |
-| `SENTRY_AUTH_TOKEN` | Sentry API 토큰 |
-| `DATADOG_API_KEY` | Datadog API 키 |
-| `GITLAB_TOKEN` | GitLab 개인 액세스 토큰 |
+---
 
 ## 사용 예시
 
@@ -141,6 +183,8 @@ Scan for security issues             # security-scan skill
 Optimize this slow query             # sql-optimize skill
 ```
 
+---
+
 ## 커스터마이징
 
 ### 새 Agent 추가
@@ -151,7 +195,6 @@ description: When to use this agent...
 model: sonnet
 tools: [Read, Write, Grep]
 ---
-
 # Agent instructions here
 ```
 
@@ -162,9 +205,20 @@ name: my-skill
 description: When to activate this skill...
 allowed-tools: [Read, Grep]
 ---
-
 # Skill workflow here
 ```
+
+### 훅 비활성화
+```json
+"disableAllHooks": true
+```
+
+### 모델 변경
+```json
+"model": "claude-sonnet-4-5-20250929"
+```
+
+---
 
 ## 라이선스
 
