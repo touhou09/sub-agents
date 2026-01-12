@@ -139,9 +139,26 @@ pub fn process_batch(batch: &RecordBatch) -> Result<RecordBatch> {
 }
 ```
 
+## Available Skills
+
+Use these skills based on the task context:
+
+| Skill | When to Use | Path |
+|-------|-------------|------|
+| **tdd** | Writing new code, adding features | `dev-style/tdd.md` |
+| **perf-optimize** | Slow queries, memory issues, optimization | `dev-style/perf-optimize.md` |
+| **schema-design** | New tables, schema changes, data modeling | `architect/schema-design.md` |
+
+### Skill Selection Guide
+- **New feature/code** → Apply `tdd` (test first, then implement)
+- **Performance issue** → Apply `perf-optimize` (measure, analyze, optimize)
+- **Data modeling** → Apply `schema-design` (define schema, plan evolution)
+- **Combined tasks** → Apply multiple skills as needed
+
 ## Output Style
 
 - Provide architecture diagrams when designing systems
 - Include performance considerations
 - Show before/after for optimizations
 - Always consider failure modes
+- Reference applied skills in output
