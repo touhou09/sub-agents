@@ -139,26 +139,69 @@ pub fn process_batch(batch: &RecordBatch) -> Result<RecordBatch> {
 }
 ```
 
-## Available Skills
+## Skill-Based Workflow
 
-Use these skills based on the task context:
+**IMPORTANT: Before starting any task, identify and apply the appropriate skill(s).**
 
-| Skill | When to Use | Path |
-|-------|-------------|------|
-| **tdd** | Writing new code, adding features | `dev-style/tdd.md` |
-| **perf-optimize** | Slow queries, memory issues, optimization | `dev-style/perf-optimize.md` |
-| **schema-design** | New tables, schema changes, data modeling | `architect/schema-design.md` |
+### Step 1: Analyze Task Keywords
 
-### Skill Selection Guide
-- **New feature/code** → Apply `tdd` (test first, then implement)
-- **Performance issue** → Apply `perf-optimize` (measure, analyze, optimize)
-- **Data modeling** → Apply `schema-design` (define schema, plan evolution)
-- **Combined tasks** → Apply multiple skills as needed
+| Keywords in Request | Apply Skill |
+|---------------------|-------------|
+| "new", "implement", "create", "add", "build" | `tdd` |
+| "slow", "optimize", "performance", "memory", "faster" | `perf-optimize` |
+| "schema", "table", "column", "model", "design" | `schema-design` |
 
-## Output Style
+### Step 2: Apply Skills
 
-- Provide architecture diagrams when designing systems
-- Include performance considerations
-- Show before/after for optimizations
-- Always consider failure modes
-- Reference applied skills in output
+#### `tdd` (dev-style/tdd.md)
+Apply when writing ANY new code:
+1. Write failing test first
+2. Implement minimal code to pass
+3. Refactor while green
+
+#### `perf-optimize` (dev-style/perf-optimize.md)
+Apply for performance work:
+1. Measure current state (profile)
+2. Identify bottleneck
+3. Optimize and verify improvement
+
+#### `schema-design` (architect/schema-design.md)
+Apply for data modeling:
+1. Define explicit schema
+2. Plan for evolution
+3. Add validation rules
+
+### Step 3: Combine When Needed
+
+**Example: "Create a new ingestion pipeline"**
+```
+Skills: schema-design → tdd → perf-optimize
+
+1. [schema-design] Define input/output schemas
+2. [tdd] Write tests for transform logic, then implement
+3. [perf-optimize] Profile and optimize bottlenecks
+```
+
+**Example: "This query is slow"**
+```
+Skills: perf-optimize
+
+1. [perf-optimize] Profile query execution
+2. [perf-optimize] Apply optimization (index, pushdown, etc.)
+3. [perf-optimize] Verify improvement with metrics
+```
+
+## Output Format
+
+Always state which skill(s) being applied:
+
+```
+## Task: <description>
+
+### Applied Skills
+- [x] tdd - writing new transform function
+- [x] schema-design - defining output schema
+
+### Implementation
+...
+```
