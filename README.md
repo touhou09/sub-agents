@@ -43,19 +43,68 @@
 
 ## 빠른 시작
 
-### 1. 전역 템플릿 설치
+### 자동 설치 (권장)
 
+**Linux / macOS:**
+```bash
+# Claude Code + Cursor 모두 설치
+./scripts/setup.sh --all
+
+# Claude Code만 설치
+./scripts/setup.sh --claude
+
+# Cursor만 설치
+./scripts/setup.sh --cursor
+
+# 심볼릭 링크 사용 (원본 업데이트 시 자동 반영)
+./scripts/setup.sh --all --symlink
+```
+
+**Windows (PowerShell):**
+```powershell
+# Claude Code + Cursor 모두 설치
+.\scripts\setup.ps1 -All
+
+# Claude Code만 설치
+.\scripts\setup.ps1 -Claude
+
+# 심볼릭 링크 사용 (관리자 권한 필요)
+.\scripts\setup.ps1 -All -Symlink
+```
+
+### 수동 설치
+
+**Claude Code:**
 ```bash
 cp -r global-templates/* ~/.claude/
 ```
 
-### 2. 프로젝트에 적용
+**Cursor:**
+```bash
+mkdir -p ~/.cursor/rules
+cp global-templates/CLAUDE.md ~/.cursor/rules/global.mdc
+```
+
+### 프로젝트에 적용
 
 ```bash
 cd /path/to/your/project
 cp -r /path/to/sub-agents/project-templates/* .
 cp -r /path/to/sub-agents/project-templates/.* . 2>/dev/null
 ```
+
+---
+
+## 지원 플랫폼
+
+| 플랫폼 | Claude Code | Cursor |
+|--------|-------------|--------|
+| **Linux** | `~/.claude/` | `~/.cursor/rules/` |
+| **macOS** | `~/.claude/` | `~/.cursor/rules/` |
+| **Windows** | `%USERPROFILE%\.claude\` | `%USERPROFILE%\.cursor\rules\` |
+
+> **Note:** Cursor 전역 User Rules는 UI 기반입니다.
+> Settings > Cursor Settings > Rules > User Rules에서 직접 설정하세요.
 
 ---
 
