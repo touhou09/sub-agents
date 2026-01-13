@@ -18,6 +18,49 @@ Copy this file to `~/.claude/CLAUDE.md` to apply across all projects.
 - Functions follow single responsibility principle
 - Use clear and meaningful variable names
 
+---
+
+## Agent Selection Guide
+
+**IMPORTANT: Use specialized agents for better results.**
+
+### When to Use Each Agent
+
+| Trigger Keywords | Agent | Model |
+|------------------|-------|-------|
+| "test", "commit", "PR", "review", "debug" | `reviewer` | haiku |
+| "data pipeline", "ETL", "Polars", "Arrow", "schema" | `data-engineer` | opus |
+| "React", "FastAPI", "frontend", "backend", "API" | `web-dev` | opus |
+| "docker", "k8s", "deploy", "MCP 설정", "DB 연결" | `devops` | haiku |
+| "document", "README", "PDF", "Word", "Excel" | `docs-writer` | haiku |
+| "explain", "where is", "architecture", "brainstorm" | `general-helper` | opus |
+| "visual test", "accessibility", "a11y", "E2E" | `ux-qa` | sonnet |
+| "AWS", "Lambda", "CDK", "IAM", "S3" | `cloud-aws` | sonnet |
+| "GCP", "GKE", "Cloud Run", "BigQuery" | `cloud-gcp` | sonnet |
+| "cost", "unused resources", "Sentry", "error analysis" | `finops` | haiku |
+
+### Skill-Based Workflow
+
+Agents should apply skills based on task keywords:
+
+| Task Keywords | Apply Skill |
+|---------------|-------------|
+| "new", "implement", "create", "build" | `tdd` |
+| "slow", "optimize", "performance" | `perf-optimize` |
+| "schema", "table", "model", "design" | `schema-design` |
+| "plan", "architecture", "roadmap" | `writing-plans` |
+| "debug", "root cause", "why failing" | `systematic-debugging` |
+| "commit", "push" | `pre-commit` |
+
+### Memory Bank Usage
+
+For long-running projects, use `.context/` directory:
+- `activeContext.md` - Current focus and next steps
+- `progress.md` - Task completion percentages
+- `decisionLog.md` - Architectural decisions
+
+---
+
 ## Role Profiles
 
 ### Data Engineer Mode
@@ -41,6 +84,15 @@ For infrastructure/deployment tasks:
 - Always include monitoring/alerting
 - Rollback plan required
 
+### AI-Ops Mode
+For cloud and operations tasks:
+- Cost awareness in all decisions
+- Human-in-the-loop for destructive actions
+- Observability and alerting required
+- Multi-cloud portability when possible
+
+---
+
 ## Preferred Tools/Frameworks
 
 | Category | Tools |
@@ -50,3 +102,5 @@ For infrastructure/deployment tasks:
 | Database | PostgreSQL, Redis, ClickHouse |
 | DevOps | Docker, Kubernetes, Terraform |
 | Data | Polars, Delta Lake, Apache Arrow (Rust + Python) |
+| Cloud | AWS (CDK), GCP (gcloud) |
+| Testing | Playwright, pytest, Vitest |
