@@ -14,7 +14,14 @@
       "Bash(git -C /home/yujin/sub-agents ls-files:*)",
       "Bash(git -C /home/yujin/sub-agents log --oneline -5)",
       "Bash(git -C /home/yujin/sub-agents remote:*)",
-      "Bash(git -C /home/yujin/sub-agents branch:*)"
+      "Bash(git -C /home/yujin/sub-agents branch:*)",
+      "WebSearch",
+      "WebFetch(domain:docs.cursor.com)",
+      "Bash(chmod:*)",
+      "Bash(/home/yujin/sub-agents/scripts/setup.sh --claude)",
+      "Bash(python3:*)",
+      "Bash(apt-get update:*)",
+      "Bash(apt-get install:*)"
     ]
   }
 }
