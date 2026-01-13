@@ -34,10 +34,6 @@ Copy this file to `~/.claude/CLAUDE.md` to apply across all projects.
 | "docker", "k8s", "deploy", "MCP 설정", "DB 연결" | `devops` | haiku |
 | "document", "README", "PDF", "Word", "Excel" | `docs-writer` | haiku |
 | "explain", "where is", "architecture", "brainstorm" | `general-helper` | opus |
-| "visual test", "accessibility", "a11y", "E2E" | `ux-qa` | sonnet |
-| "AWS", "Lambda", "CDK", "IAM", "S3" | `cloud-aws` | sonnet |
-| "GCP", "GKE", "Cloud Run", "BigQuery" | `cloud-gcp` | sonnet |
-| "cost", "unused resources", "Sentry", "error analysis" | `finops` | haiku |
 
 ### Skill-Based Workflow
 
@@ -83,13 +79,6 @@ For infrastructure/deployment tasks:
 - Security first (least privilege)
 - Always include monitoring/alerting
 - Rollback plan required
-
-### AI-Ops Mode
-For cloud and operations tasks:
-- Cost awareness in all decisions
-- Human-in-the-loop for destructive actions
-- Observability and alerting required
-- Multi-cloud portability when possible
 
 ---
 
