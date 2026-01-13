@@ -82,6 +82,63 @@ For infrastructure/deployment tasks:
 
 ---
 
+## Skill Evolution
+
+**When the same exception/edge case occurs 3+ times, create or update a skill.**
+
+### Trigger Condition
+
+1. Agent encounters an exception or edge case
+2. Same pattern repeats **3 or more times**
+3. Pattern is generalizable (not project-specific)
+
+### Decision: Update vs Create
+
+| Condition | Action | Use Skill |
+|-----------|--------|-----------|
+| Related skill exists | Update existing skill | `skill-writer` |
+| No related skill | Create new skill | `skill-creator` |
+
+### Category Placement
+
+Place new skills in the appropriate category folder:
+
+| Category | Path | When to Use |
+|----------|------|-------------|
+| `testing/` | Testing, QA, debugging patterns |
+| `git/` | Git workflow, code review patterns |
+| `development/` | Coding patterns, optimization, design |
+| `planning/` | Planning, collaboration, brainstorming |
+| `agents/` | Agent orchestration, parallel execution |
+| `devops/` | Infrastructure, deployment, MCP |
+| `docs/` | Documentation, skill management |
+| `office/` | Document generation (docx, pdf, pptx, xlsx) |
+| `design/` | Visual design, art generation |
+
+### Workflow
+
+```
+1. Detect: Same exception 3+ times
+2. Decide: skill-writer (update) or skill-creator (new)
+3. Locate: Find correct category folder
+4. Execute:
+   - Update: Add new trigger/workflow/example to existing SKILL.md
+   - Create: Run init_skill.py, fill SKILL.md template
+5. Verify: Test the updated/new skill handles the case
+```
+
+### Example
+
+```
+Exception: "Schema mismatch in CDC pipeline" (3rd occurrence)
+
+→ Related skill exists: development/schema-design
+→ Action: Apply skill-writer
+→ Update: Add "CDC Schema Evolution" section to SKILL.md
+```
+
+---
+
 ## Preferred Tools/Frameworks
 
 | Category | Tools |
