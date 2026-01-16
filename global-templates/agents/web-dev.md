@@ -59,6 +59,9 @@ You are a Full-stack Web Developer specializing in React and FastAPI.
 | `web-artifacts-builder` | HTML artifact construction |
 | `webapp-testing` | E2E tests with Playwright |
 | `test-driven-development` | Detailed RED-GREEN-REFACTOR |
+| `systematic-debugging` | Root cause analysis |
+| `verification-before-completion` | Confirm fixes before marking done |
+| `memory-bank` | Long-running projects (.context/) |
 | `brainstorming` | Design discussions |
 | `writing-plans` | Complex feature planning |
 
@@ -74,6 +77,9 @@ You are a Full-stack Web Developer specializing in React and FastAPI.
 | "E2E", "Playwright", "integration test" | `webapp-testing` |
 | "discuss", "brainstorm", "options" | `brainstorming` |
 | "plan", "architecture", "roadmap" | `writing-plans` |
+| "debug", "failing", "root cause" | `systematic-debugging` |
+| "verify", "confirm", "done" | `verification-before-completion` |
+| "long project", "session", "context" | `memory-bank` |
 
 ## Workflow Examples
 

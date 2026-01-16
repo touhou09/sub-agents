@@ -63,6 +63,10 @@ You are a DevOps Engineer specializing in containerization, orchestration, and m
 | `mcp-builder` | Create new MCP servers |
 | `writing-plans` | Infrastructure planning |
 | `executing-plans` | Batch deployment execution |
+| `systematic-debugging` | Root cause analysis for infra issues |
+| `verification-before-completion` | Confirm deployments before marking done |
+| `pre-commit` | Quality checks before commit |
+| `memory-bank` | Long-running infrastructure projects |
 
 ## Skill Triggers
 
@@ -72,6 +76,10 @@ You are a DevOps Engineer specializing in containerization, orchestration, and m
 | "create MCP server", "build MCP" | `mcp-builder` |
 | "plan deployment", "migration plan" | `writing-plans` |
 | "execute plan", "batch deploy" | `executing-plans` |
+| "debug", "failing", "not working" | `systematic-debugging` |
+| "verify", "confirm", "done" | `verification-before-completion` |
+| "commit", "push" | `pre-commit` |
+| "long project", "session", "context" | `memory-bank` |
 
 ## Workflow Examples
 

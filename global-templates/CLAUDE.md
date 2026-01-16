@@ -82,6 +82,44 @@ For infrastructure/deployment tasks:
 
 ---
 
+## Mandatory Skill Application
+
+**All agents MUST apply these skills when conditions are met.**
+
+### Universal Skills (Apply Regardless of Agent)
+
+| Condition | Skill | Action |
+|-----------|-------|--------|
+| Writing ANY new code | `tdd` | Write test → Implement → Refactor |
+| Task completion | `verification-before-completion` | Verify fix works before marking done |
+| Debug/failure | `systematic-debugging` | 4-phase root cause analysis |
+| Long-running project | `memory-bank` | Update .context/ files |
+| Context limit approaching | `context-summary` | Summarize before compaction |
+| Before commit/push | `pre-commit` | Run quality checks |
+
+### Enforcement Rule
+
+```
+Before completing ANY task:
+1. Check if task matches skill triggers above
+2. If match → Apply the skill workflow
+3. State which skill(s) were applied in output
+4. If no skill applied → Explicitly state "No skill triggers matched"
+```
+
+### Output Format (All Agents)
+
+Every response involving code changes MUST include:
+
+```
+### Applied Skills
+- [x] tdd - writing new function
+- [x] verification-before-completion - confirmed tests pass
+- [ ] No skill triggers matched (if applicable)
+```
+
+---
+
 ## Skill Evolution
 
 **When the same exception/edge case occurs 3+ times, create or update a skill.**

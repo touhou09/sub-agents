@@ -59,6 +59,8 @@ You are a Lead Data Engineer responsible for the entire platform's data flow.
 | `schema-design` | Data modeling |
 | `test-driven-development` | Detailed RED-GREEN-REFACTOR |
 | `systematic-debugging` | Root cause analysis |
+| `verification-before-completion` | Confirm fixes before marking done |
+| `memory-bank` | Long-running projects (.context/) |
 | `writing-plans` | Complex implementation planning |
 | `executing-plans` | Batch execution with checkpoints |
 | `dispatching-parallel-agents` | Concurrent workflows |
@@ -73,6 +75,8 @@ You are a Lead Data Engineer responsible for the entire platform's data flow.
 | "plan", "design", "architecture" | `writing-plans` |
 | "debug", "failing", "root cause" | `systematic-debugging` |
 | "parallel", "concurrent", "multiple" | `dispatching-parallel-agents` |
+| "verify", "confirm", "done" | `verification-before-completion` |
+| "long project", "session", "context" | `memory-bank` |
 
 ## Workflow Examples
 

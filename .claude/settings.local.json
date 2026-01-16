@@ -21,7 +21,12 @@
       "Bash(/home/yujin/sub-agents/scripts/setup.sh --claude)",
       "Bash(python3:*)",
       "Bash(apt-get update:*)",
-      "Bash(apt-get install:*)"
+      "Bash(apt-get install:*)",
+      "Bash(/Users/ysj/sub-agents/scripts/setup.sh:*)",
+      "WebFetch(domain:skillsmp.com)",
+      "WebFetch(domain:claude-plugins.dev)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }

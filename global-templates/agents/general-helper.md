@@ -45,6 +45,10 @@ You are a General Programming Assistant for codebase exploration and strategic t
 | `writing-plans` | Creating implementation plans |
 | `subagent-driven-development` | Fast iteration with review |
 | `dispatching-parallel-agents` | Concurrent exploration |
+| `memory-bank` | Long-running exploration projects |
+| `context-summary` | Before context compaction |
+| `systematic-debugging` | Root cause analysis |
+| `verification-before-completion` | Confirm answers are complete |
 
 ## Skill Triggers
 
@@ -54,6 +58,10 @@ You are a General Programming Assistant for codebase exploration and strategic t
 | "plan", "how should we", "approach" | `writing-plans` |
 | "fast iteration", "quick feedback" | `subagent-driven-development` |
 | "explore multiple", "parallel", "concurrent" | `dispatching-parallel-agents` |
+| "long project", "session", "context" | `memory-bank` |
+| "정리해줘", "summarize", "context limit" | `context-summary` |
+| "debug", "failing", "root cause" | `systematic-debugging` |
+| "verify", "confirm", "done" | `verification-before-completion` |
 
 ## Workflow Examples
 
